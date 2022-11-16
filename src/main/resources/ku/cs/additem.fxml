@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AddItemController">
+   <children>
+      <AnchorPane prefHeight="154.0" prefWidth="800.0" style="-fx-background-color: #47C6FC;">
+         <children>
+            <Label fx:id="storeNameLabel" alignment="CENTER" layoutX="294.0" layoutY="66.0" text="ชื่อร้านค้า" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="206.0" layoutY="171.0" text="ชื่อสินค้า">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="150.0" layoutY="232.0" text="รายละเอียดสินค้า">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="221.0" layoutY="291.0" text="ราคา">
+         <font>
+            <Font size="19.0" />
+         </font></Label>
+      <TextField fx:id="itemNameTextField" layoutX="334.0" layoutY="171.0" prefHeight="28.0" prefWidth="281.0" />
+      <TextField fx:id="describeTextField" layoutX="334.0" layoutY="231.0" prefHeight="28.0" prefWidth="281.0" />
+      <TextField fx:id="priceTextField" layoutX="334.0" layoutY="291.0" prefHeight="28.0" prefWidth="82.0" />
+      <Label layoutX="207.0" layoutY="351.0" text="จำนวน">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <TextField fx:id="amountTextField" layoutX="334.0" layoutY="351.0" prefHeight="28.0" prefWidth="82.0" />
+      <Button layoutX="351.0" layoutY="439.0" mnemonicParsing="false" onAction="#handleAddItemButton" prefHeight="30.0" prefWidth="89.0" text="เพิ่มสินค้า">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Label fx:id="warningMessageLabel" layoutX="334.0" layoutY="388.0" text="warningMessageLabel" textFill="#ce0707" />
+      <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#handleBackToMyShop" prefHeight="27.0" prefWidth="47.0" text="กลับ">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

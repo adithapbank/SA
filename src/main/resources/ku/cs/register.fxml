@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.RegisterController">
+   <children>
+      <AnchorPane layoutX="-2.0" prefHeight="118.0" prefWidth="803.0" style="-fx-background-color: #47C6FC;">
+         <children>
+            <Text fill="WHITE" layoutX="325.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ลงทะเบียน" wrappingWidth="152.798828125">
+               <font>
+                  <Font name="System Bold" size="33.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
+      <TextField fx:id="nameTextField" layoutX="303.0" layoutY="150.0" prefHeight="28.0" prefWidth="289.0" />
+      <TextField fx:id="surnameTextField" layoutX="303.0" layoutY="200.0" prefHeight="28.0" prefWidth="289.0" />
+      <TextField fx:id="usernameTextField" layoutX="303.0" layoutY="250.0" prefHeight="28.0" prefWidth="289.0" />
+      <PasswordField fx:id="passwordTextField" layoutX="303.0" layoutY="300.0" prefHeight="28.0" prefWidth="289.0" />
+      <PasswordField fx:id="confirmPasswordTextField" layoutX="303.0" layoutY="350.0" prefHeight="28.0" prefWidth="289.0" />
+      <Button layoutX="277.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="289.0" text="ลงทะเบียน">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#handleBackToLoginButton" text="กลับ">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Text layoutX="244.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text layoutX="203.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อผู้ใช้" wrappingWidth="60.291015625">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text layoutX="201.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสผ่าน" wrappingWidth="65.234375">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Text layoutX="158.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ยืนยันรหัสผ่าน">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Label fx:id="warningMessageLabel" layoutX="303.0" layoutY="388.0" text="warningMessageLabel" textFill="#ef0808" />
+      <Text layoutX="201.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นามสกุล">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+   </children>
+</AnchorPane>

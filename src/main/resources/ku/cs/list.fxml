@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ListController">
+   <children>
+      <AnchorPane prefHeight="161.0" prefWidth="1027.0" style="-fx-background-color: #47C6FC;">
+         <children>
+            <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="862.0" layoutY="72.0" text="userNameLabel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="902.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleBackToLoginButton" prefHeight="25.0" prefWidth="98.0" text="ออกจากระบบ">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="773.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleSettingButton" prefHeight="30.0" prefWidth="111.0" text="รายละเอียดบัญชี">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <ImageView fx:id="userImageView" fitHeight="107.0" fitWidth="125.0" layoutX="689.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fill="#fffbfb" layoutX="86.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รายชื่อผู้กระทำผิด">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+            </Text>
+            <Label fx:id="nameSurNameLabel" layoutX="846.0" layoutY="41.0" text="nameSurNameLabel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="adminButton" layoutX="641.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleGoToAddName" prefHeight="30.0" prefWidth="111.0" text="เพิ่มรายชื่อ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="fixGoToAddPenalties" layoutX="500.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleGoToAddPenalties" prefHeight="30.0" prefWidth="111.0" text="เพิ่มบทลงโทษ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="itemTableView" layoutX="58.0" layoutY="191.0" prefHeight="485.0" prefWidth="394.0">
+         <columns>
+            <TableColumn fx:id="idCol" prefWidth="122.0" text="EmployeeID" />
+            <TableColumn fx:id="nameCol" prefWidth="148.0" text="Employee Name" />
+            <TableColumn fx:id="levelCol" prefWidth="123.0" text="Level" />
+         </columns></TableView>
+      <Label fx:id="nameLabel" layoutX="680.0" layoutY="255.0" text="nameLabel" textFill="#312e30">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLevelLabel" layoutX="682.0" layoutY="311.0" prefHeight="35.0" prefWidth="125.0" text="errorLevelLabel" textFill="#151516">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="itemImageView" fitHeight="117.0" fitWidth="117.0" layoutX="872.0" layoutY="193.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="563.0" layoutY="191.0" prefHeight="35.0" prefWidth="96.0" text="รหัสพนักงาน">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="558.0" layoutY="251.0" prefHeight="35.0" prefWidth="89.0" text="ชื่อ-นามสกุล">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="548.0" layoutY="311.0" prefHeight="35.0" prefWidth="96.0" text="ระดับความผิด">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Separator layoutX="509.0" layoutY="162.0" orientation="VERTICAL" prefHeight="599.0" prefWidth="2.0" />
+      <Label layoutX="558.0" layoutY="367.0" prefHeight="35.0" prefWidth="89.0" text="บทลงโทษ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="idNameLabel" layoutX="680.0" layoutY="195.0" text="idNameLabel" textFill="#312e30">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="descriptionTextField" layoutX="563.0" layoutY="427.0" prefHeight="35.0" prefWidth="339.0" text="descriptionTextField" textFill="#151516">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="58.0" layoutY="162.0" mnemonicParsing="false" onAction="#showItemData" text="Refresh">
+      </Button>
+   </children>
+</AnchorPane>
