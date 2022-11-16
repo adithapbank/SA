@@ -32,26 +32,20 @@ public class ListController {
     @FXML private TableView<Item> itemTableView;
     @FXML private Button adminButton;
     @FXML private Label userNameLabel;
-    @FXML private ImageView itemImageView;
     @FXML private ImageView userImageView;
     @FXML private Label nameSurNameLabel;
     @FXML private Button fixGoToAddPenalties;
-    @FXML private Label idNameLabel;
-    @FXML private Label nameLabel;
-    @FXML private Label descriptionTextField;
-    @FXML private Label errorLevelLabel;
     @FXML private TableColumn<Item, String> idCol;
     @FXML private TableColumn<Item, String> nameCol;
     @FXML private TableColumn<Item, String> levelCol;
+    @FXML private TableColumn<Item, String> penalCol;
+    @FXML private TableColumn<Item, String> departCol;
+    @FXML private TableColumn<Item, String> saCol;
     String query = null;
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     private User user;
-
-    private DataSource<ItemList> dataSource;
-    private ItemList itemList;
-    private ObservableList<Item> itemObservableList;
 
     private Item selectedItem;
 
@@ -60,7 +54,6 @@ public class ListController {
     {
         System.out.println("Enter List");
         user = (User) FXRouter.getData();
-        itemImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
         userImageView.setImage(new Image("file:"+user.getImagePath() ,true));
         userNameLabel.setText(user.getUsername());
         nameSurNameLabel.setText(user.getName()+ " " +user.getSurname());
@@ -68,25 +61,15 @@ public class ListController {
         if(user.getType().equals("user")){
             adminButton.setDisable(true);
             fixGoToAddPenalties.setDisable(true);}
-        clearSelectedItem();
         loadData();
         showItemData();
-//        showSelectedItem();
-
-//        dataSource = new ItemListFileDataSource();
-//        itemList = dataSource.readData();
-//        showItemData();
-
-//        itemTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            showSelectedItem(newValue);
-//        });
     }
 
     @FXML
     private void showItemData() {
         ObservableList<Item> ItemList = FXCollections.observableArrayList();
         try {
-            query = "SELECT * FROM `employee` ";
+            query = "SELECT * FROM employee INNER JOIN penalty ON employee.P_ID = penalty.P_ID";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
@@ -94,7 +77,11 @@ public class ListController {
                 ItemList.add(new Item(
                         resultSet.getString("E_ID"),
                         resultSet.getString("E_Name"),
-                        resultSet.getString("P_ID")));
+                        resultSet.getString("Depart_Name"),
+                        resultSet.getInt("E_Salary"),
+                        resultSet.getString("P_ID"),
+                        resultSet.getString("P_Name")));
+
                 itemTableView.setItems(ItemList);
             }
         } catch (SQLException ex) {
@@ -106,7 +93,12 @@ public class ListController {
         Connect();
         idCol.setCellValueFactory(new PropertyValueFactory<>("idName"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        departCol.setCellValueFactory(new PropertyValueFactory<>("department"));
+        saCol.setCellValueFactory(new PropertyValueFactory<>("salary"));
         levelCol.setCellValueFactory(new PropertyValueFactory<>("errorLevel"));
+        penalCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+
 
     }
     public void Connect() {
@@ -121,44 +113,19 @@ public class ListController {
             ex.printStackTrace();
         }
     }
-    private void clearSelectedItem() {
-        selectedItem = null;
 
-        idNameLabel.setText("");
-        nameLabel.setText("");
-        errorLevelLabel.setText("");
-        descriptionTextField.setText("");
-
-        itemImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
-        idNameLabel.setDisable(true);
-    }
-
-
-    private void showSelectedItem(Item item) {
-        selectedItem = item;
-        idNameLabel.setText(item.getIdName());
-        nameLabel.setText(item.getName());
-        errorLevelLabel.setText(item.getErrorLevel());
-        descriptionTextField.setText(item.getDescription());
-        idNameLabel.setDisable(false);
-
-
-    }
     @FXML
     public void handleGoToAddPenalties(ActionEvent actionEvent){
-//        try {
-//            FXRouter.goTo("addpenalties",user);
-//        } catch (IOException e) {
-//            System.err.println("ไปที่หน้า addpenalties ไม่ได้");
-//            System.err.println("ให้ตรวจสอบการกำหนด route");
-//        }
+
         try {
+            selectedItem = itemTableView.getSelectionModel().getSelectedItem();
             Parent parent = FXMLLoader.load(getClass().getResource("/ku/cs/addpenalties.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.initStyle(StageStyle.UTILITY);
             stage.show();
+
         }  catch (IOException ex) {
             System.err.println("ไปหน้า addpenalties ไม่ได้");
         }

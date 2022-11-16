@@ -6,129 +6,97 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import ku.cs.models.Item;
-import ku.cs.models.ItemList;
-import ku.cs.models.User;
-import ku.cs.models.UserList;
 import ku.cs.router.FXRouter;
-import ku.cs.services.DataSource;
-import ku.cs.services.ItemListFileDataSource;
-import ku.cs.services.StringConfiguration;
-import ku.cs.services.UserListFileDataSource;
+import ku.cs.services.*;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddPenaltiesController {
+    String query = null;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    private boolean update;
+    String emId;
 
-    private User user;
-    private Item item;
-
-    @FXML private TableView<Item> itemTableView;
-    @FXML private Label idNameLabel;
-    @FXML private Label nameLabel;
-    @FXML private Label departmentLabel;
-    @FXML private Label salaryLabel;
-    @FXML private TextField descriptionTextField;
-    @FXML private TextField errorLevelTextField;
-    @FXML private ImageView itemImageView;
-    @FXML private Button fixItemDataButton;
-
-
-    private DataSource<ItemList> dataSource;
-    private ItemList itemList;
-    private ObservableList<Item> itemObservableList;
-    private Item selectedItem;
-
+    @FXML
+    private TextField departmentTextField;
+    @FXML
+    private TextField errorLevelTextField;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField salaryTextField;
 
     @FXML
     public void initialize() {
-        System.out.println("Enter MyShop");
-        user = (User) FXRouter.getData();
-        DataSource<UserList> dataSourceUser = new UserListFileDataSource();
-        UserList userList = dataSourceUser.readData();
-
-
-        dataSource = new ItemListFileDataSource();
-        itemList = dataSource.readData();
-
+        Connect();
         clearSelectedItem();
-        showItemData();
-
-        itemTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            showSelectedItem(newValue);
-        });
 
     }
-
-    private void clearSelectedItem() {
-        selectedItem = null;
-        idNameLabel.setText("");
-        nameLabel.setText("");
-        departmentLabel.setText("");
-        salaryLabel.setText("");
-        errorLevelTextField.setText("");
-        descriptionTextField.setText("");
-        itemImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
-        fixItemDataButton.setDisable(true);
-    }
-
-    private void showSelectedItem(Item item) {
-        DataSource<UserList> dataSourceUser = new UserListFileDataSource();
-        UserList userList = dataSourceUser.readData();
-        User newUser = userList.SearchByUsername(user.getUsername());
-
-        selectedItem = item;
-        idNameLabel.setText(item.getIdName());
-        nameLabel.setText(item.getName());
-        departmentLabel.setText(item.getDepartment());
-        salaryLabel.setText(String.valueOf(item.getSalary()));
-        errorLevelTextField.setText(item.getErrorLevel());
-        descriptionTextField.setText(item.getDescription());
-
-        if (item.getImagePath().equals("null")) {
-            itemImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
-        } else {
-            itemImageView.setImage(new Image("file:" + item.getImagePath(), true));
-        }
-        fixItemDataButton.setDisable(false);
-    }
-
-    private void showItemData() {
-        itemObservableList = FXCollections.observableArrayList(itemList.getAllItems());
-        itemTableView.setItems(itemObservableList);
-
-        ArrayList<StringConfiguration> configs = new ArrayList<>();
-        configs.add(new StringConfiguration("title:รหัสพนักงาน", "field:idName"));
-        configs.add(new StringConfiguration("title:รายชื่อ", "field:name"));
-        configs.add(new StringConfiguration("title:แผนก", "field:department"));
-        configs.add(new StringConfiguration("title:เงินเดือน", "field:salary"));
-        configs.add(new StringConfiguration("title:ระดับความผิด", "field:errorLevel"));
-
-        for (StringConfiguration conf : configs) {
-            TableColumn col = new TableColumn(conf.get("title"));
-            col.setCellValueFactory(new PropertyValueFactory<>(conf.get("field")));
-            itemTableView.getColumns().add(col);
-        }
-    }
-
 
     @FXML
     public void handleFixDataItemButton(ActionEvent actionEvent) {
-        try {
-            Item s = itemList.SearchByItemNameAndStoreName(item.getDescription());
-            s.setDescription(descriptionTextField.getText().trim());
-            dataSource.writeData(itemList);
+        Connect();
+        String E_Name = nameTextField.getText();
+        String Depart_Name = departmentTextField.getText();
+        String P_ID = errorLevelTextField.getText();
+        Double E_Salary = Double.parseDouble(salaryTextField.getText().trim());
 
-            FXRouter.goTo("list");
-        } catch (IOException e) {
-            System.err.println("ไปหน้า list ไม่ได้");
-            System.err.println("ให้ตรวจสอบการกำหนด route");
+        getQuery();
+        insert();
+//        try {
+//                preparedStatement = connection.prepareStatement("UPDATE employee set E_Name=?,Depart_Name=?,E_Salary=?,P_ID=? where E_ID = ?");
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+    }
+    private void insert() {
+
+        try {
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, nameTextField.getText());
+            preparedStatement.setString(2, departmentTextField.getText());
+            preparedStatement.setString(3, salaryTextField.getText());
+            preparedStatement.setString(4, errorLevelTextField.getText());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddPenaltiesController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+    private void getQuery() {
+
+            query = "UPDATE `employee` SET "
+                    + "`E_Name`=?,"
+                    + "`Depart_Name`=?,"
+                    + "`E_Salary`=?,"
+                    + "`P_ID`= ? WHERE id = '"+emId+"'";
+
+
+    }
+    public void Connect() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/human", "root", "");
+            System.out.println("Database Connected");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    private void clearSelectedItem() {
+
+        errorLevelTextField.setText("");
     }
 
     @FXML
@@ -140,6 +108,22 @@ public class AddPenaltiesController {
             System.err.println("ให้ตรวจสอบการกำหนด route");
         }
     }
+    void setTextField(String E_ID, String E_Name, String Depart_Name, Double E_Salary, String P_ID) {
+
+        emId = E_ID;
+        nameTextField.setText(E_Name);
+        departmentTextField.setText(Depart_Name);
+        salaryTextField.setText(E_Salary.toString());
+        errorLevelTextField.setText(P_ID);
+
+    }
+
+    void setUpdate(boolean b) {
+        this.update = b;
+
+    }
+
 
 
 }
+

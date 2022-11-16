@@ -30,7 +30,7 @@ public class AddNameController {
 
     @FXML
     public void initialize() {
-        System.out.println("Enter AddItem");
+        System.out.println("Enter AddName");
         user = (User) FXRouter.getData();
         warningMessageLabel3.setText("");
         Connect();
@@ -73,11 +73,6 @@ public class AddNameController {
                     pst.setString(5,"0");
 
                     pst.executeUpdate();
-//                    Item item = new Item(user.getIdName());
-//                    item.setIdName(idNameTextField.getText());
-//                    item.setName(nameTextField.getText());
-//                    item.setDepartment(departmentTextField.getText());
-//                    item.setSalary(Integer.parseInt(salaryTextField.getText()));
                     FXRouter.goTo("list");
                 } else {
                     warningMessageLabel3.setText("กรุณากรอกข้อมูลให้ครบ");

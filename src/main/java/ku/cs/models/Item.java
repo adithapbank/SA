@@ -34,21 +34,16 @@ public class Item {
 
     }
 
-    public Item(String idName, String name, String errorLevel){
+    public Item(String idName, String name, String department, int salary, String errorLevel, String description){
         this.idName = idName;
         this.name = name;
+        this.department = department;
+        this.salary = salary;
         this.errorLevel = errorLevel;
+        this.description = description;
 
 
     }
-
-//    public void setItemName(String itemName) {
-//        this.itemName = itemName;
-//    }
-//    public String getItemName() {
-//        return itemName;
-//    }
-
 
     public void setIdName(String idName) {this.idName = idName;}
     public void setName(String name) {
