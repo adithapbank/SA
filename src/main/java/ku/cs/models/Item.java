@@ -39,7 +39,7 @@ public class Item {
 
     }
 
-    public Item(String idName, String name, String department, Double salary, Integer errorLevel, String description, String caseName){
+    public Item(String idName, String name, String department, Double salary, Integer errorLevel, Integer caseId, String description, String caseName){
         this.idName = idName;
         this.name = name;
         this.department = department;
@@ -47,6 +47,7 @@ public class Item {
         this.errorLevel = errorLevel;
         this.description = description;
         this.caseName = caseName;
+        this.caseId = caseId;
 
     }
 

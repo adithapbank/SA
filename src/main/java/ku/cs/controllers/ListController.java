@@ -55,6 +55,7 @@ public class ListController {
     @FXML private TableColumn<Item, String> departCol;
     @FXML private TableColumn<Item, String> saCol;
     @FXML private TableColumn<Item, String> caseCol;
+    @FXML private TableColumn<Item, String> caseIdCol;
     @FXML private Button goToPenalties;
     String query = null;
     Connection connection = null;
@@ -101,8 +102,10 @@ public class ListController {
                         resultSet.getString("Depart_Name"),
                         resultSet.getDouble("E_Salary"),
                         resultSet.getInt("P_ID"),
+                        resultSet.getInt("Case_ID"),
                         resultSet.getString("P_Name"),
-                        resultSet.getString("Case_Name")));
+                        resultSet.getString("Case_Name")
+                        ));
 
 
                 itemTableView.setItems(ItemList);
@@ -145,6 +148,7 @@ public class ListController {
         levelCol.setCellValueFactory(new PropertyValueFactory<>("errorLevel"));
         penalCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         caseCol.setCellValueFactory(new PropertyValueFactory<>("caseName"));
+        caseIdCol.setCellValueFactory(new PropertyValueFactory<>("caseId"));
 
 
     }
