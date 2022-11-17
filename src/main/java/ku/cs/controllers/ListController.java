@@ -42,6 +42,7 @@ public class ListController {
     @FXML private TextField depText;
     @FXML private TextField salaText;
     @FXML private Button addLevelBtn;
+    @FXML private Label warningMessageLabel5;
     @FXML private TableColumn<Item, String> idCol;
     @FXML private TableColumn<Item, String> nameCol;
     @FXML private TableColumn<Item, String> levelCol;
@@ -197,20 +198,32 @@ public class ListController {
         String name = nameText.getText();
         String dep = depText.getText();
         String sala = salaText.getText();
-        Integer lev = Integer.parseInt(levelText.getText());
-        try{
-            preparedStatement = connection.prepareStatement("UPDATE employee SET E_Name = ?, Depart_Name = ?, E_Salary = ? ,P_ID = ? where E_ID = ?");
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2,dep);
-            preparedStatement.setString(3,sala);
-            preparedStatement.setInt(4,lev);
-            preparedStatement.setString(5,id);
-            preparedStatement.executeUpdate();
-            showItemData();
+        String lev = levelText.getText();
+        if(!Check.isInteger(lev)){
+            warningMessageLabel5.setText("กรุณาใส่ตัวเลข");
+        } else {
+            Integer lev2 = Integer.parseInt(lev);
+            if(lev2 < 0 || lev2 > 6){
+                warningMessageLabel5.setText("กรุณาใส่ตัวเลข 0-6");
+            }else{
+                try{
+                    preparedStatement = connection.prepareStatement("UPDATE employee SET E_Name = ?, Depart_Name = ?, E_Salary = ? ,P_ID = ? where E_ID = ?");
+                    preparedStatement.setString(1, name);
+                    preparedStatement.setString(2,dep);
+                    preparedStatement.setString(3,sala);
+                    preparedStatement.setString(4,lev);
+                    preparedStatement.setString(5,id);
+                    preparedStatement.executeUpdate();
+                    showItemData();
+                    warningMessageLabel5.setText("");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
+
 
     }
 
