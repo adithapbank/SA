@@ -2,6 +2,8 @@ package ku.cs.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Filter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +45,8 @@ public class ListController {
     @FXML private TextField depText;
     @FXML private TextField salaText;
     @FXML private Button addLevelBtn;
+    @FXML private Button deleteCase;
+    @FXML private Button deleteBtn;
     @FXML private Label warningMessageLabel5;
     @FXML private TableColumn<Item, String> idCol;
     @FXML private TableColumn<Item, String> nameCol;
@@ -49,6 +54,8 @@ public class ListController {
     @FXML private TableColumn<Item, String> penalCol;
     @FXML private TableColumn<Item, String> departCol;
     @FXML private TableColumn<Item, String> saCol;
+    @FXML private TableColumn<Item, String> caseCol;
+    @FXML private Button goToPenalties;
     String query = null;
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -56,7 +63,6 @@ public class ListController {
     private User user;
 
     private Item selectedItem;
-
     @FXML
     public void initialize()
     {
@@ -78,6 +84,32 @@ public class ListController {
             }
         loadData();
         showItemData();
+
+
+    }
+    @FXML void showCaseData() {
+        ObservableList<Item> ItemList = FXCollections.observableArrayList();
+        try {
+            query = "SELECT * FROM employee INNER JOIN penalty ON employee.P_ID = penalty.P_ID INNER JOIN case1 ON employee.E_ID = case1.E_ID";
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ItemList.add(new Item(
+                        resultSet.getString("E_ID"),
+                        resultSet.getString("E_Name"),
+                        resultSet.getString("Depart_Name"),
+                        resultSet.getDouble("E_Salary"),
+                        resultSet.getInt("P_ID"),
+                        resultSet.getString("P_Name"),
+                        resultSet.getString("Case_Name")));
+
+
+                itemTableView.setItems(ItemList);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -112,7 +144,7 @@ public class ListController {
         saCol.setCellValueFactory(new PropertyValueFactory<>("salary"));
         levelCol.setCellValueFactory(new PropertyValueFactory<>("errorLevel"));
         penalCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-
+        caseCol.setCellValueFactory(new PropertyValueFactory<>("caseName"));
 
 
     }
@@ -128,9 +160,6 @@ public class ListController {
             ex.printStackTrace();
         }
     }
-
-
-
 
     @FXML
     public void handleSettingButton(ActionEvent actionEvent){
@@ -157,7 +186,19 @@ public class ListController {
             }
     }
 
-
+    @FXML
+    public void handleGoToPenalties(ActionEvent actionEvent){
+        try{
+            Parent parent = FXMLLoader.load(getClass().getResource("/ku/cs/addpenalties.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     public void handleBackToLoginButton(ActionEvent actionEvent){
         try {
@@ -193,6 +234,39 @@ public class ListController {
         levelText.setText(""+item.getErrorLevel());
     }
     @FXML
+    public void deleteCase(ActionEvent actionEvent) {
+        try {
+            Item item = itemTableView.getSelectionModel().getSelectedItem();
+            preparedStatement = connection.prepareStatement("delete from case1 where Case_ID = "+item.getCaseId());
+            preparedStatement.executeUpdate();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Delete");
+            alert.setHeaderText("Case Deleted");
+            alert.setContentText("");
+            alert.showAndWait();
+            showCaseData();
+        } catch (SQLException e) {
+            Logger.getLogger(ListController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    @FXML
+    public void deleteBtn(ActionEvent actionEvent) {
+        try {
+            Item item = itemTableView.getSelectionModel().getSelectedItem();
+            preparedStatement = connection.prepareStatement("delete from employee where E_ID = "+item.getIdName());
+            preparedStatement.executeUpdate();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Delete");
+            alert.setHeaderText("Deleted");
+            alert.setContentText("");
+            alert.showAndWait();
+            showItemData();
+        } catch (SQLException e) {
+            Logger.getLogger(ListController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    @FXML
     public void addLevelBtn(ActionEvent actionEvent) {
         String id = idText.getText();
         String name = nameText.getText();
@@ -214,6 +288,11 @@ public class ListController {
                     preparedStatement.setString(4,lev);
                     preparedStatement.setString(5,id);
                     preparedStatement.executeUpdate();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Level Add");
+                    alert.setHeaderText("Level Updated");
+                    alert.setContentText("");
+                    alert.showAndWait();
                     showItemData();
                     warningMessageLabel5.setText("");
 
@@ -223,8 +302,5 @@ public class ListController {
             }
 
         }
-
-
     }
-
 }

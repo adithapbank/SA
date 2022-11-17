@@ -1,6 +1,7 @@
 package ku.cs.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import ku.cs.models.Item;
@@ -15,8 +16,7 @@ import java.sql.SQLException;
 
 
 public class AddNameController {
-    private User user;
-    private Item item;
+
     @FXML
     private TextField idNameTextField;
     @FXML
@@ -31,7 +31,6 @@ public class AddNameController {
     @FXML
     public void initialize() {
         System.out.println("Enter AddName");
-        user = (User) FXRouter.getData();
         warningMessageLabel3.setText("");
         Connect();
     }
@@ -73,6 +72,11 @@ public class AddNameController {
                     pst.setString(5,"0");
 
                     pst.executeUpdate();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Add");
+                    alert.setHeaderText("Added");
+                    alert.setContentText("");
+                    alert.showAndWait();
                     FXRouter.goTo("list");
                 } else {
                     warningMessageLabel3.setText("กรุณากรอกข้อมูลให้ครบ");

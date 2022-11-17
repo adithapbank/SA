@@ -16,76 +16,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AddPenaltiesController {
-    String query = null;
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    private boolean update;
-    String emId;
 
-    @FXML
-    private TextField departmentTextField;
-    @FXML
-    private TextField errorLevelTextField;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField salaryTextField;
+    @FXML private TextField caseIdTextField;
+    @FXML private TextField departTextField;
+    @FXML private TextField caseTextField;
+    @FXML private TextField idTextField;
+    @FXML private Label warningMessageLabel;
 
     @FXML
     public void initialize() {
         Connect();
-        clearSelectedItem();
 
     }
-
-    @FXML
-    public void handleFixDataItemButton(ActionEvent actionEvent) {
-        Connect();
-        String E_Name = nameTextField.getText();
-        String Depart_Name = departmentTextField.getText();
-        String P_ID = errorLevelTextField.getText();
-        Double E_Salary = Double.parseDouble(salaryTextField.getText().trim());
-
-        getQuery();
-        insert();
-//        try {
-//                preparedStatement = connection.prepareStatement("UPDATE employee set E_Name=?,Depart_Name=?,E_Salary=?,P_ID=? where E_ID = ?");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-    }
-    private void insert() {
-
-        try {
-
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, nameTextField.getText());
-            preparedStatement.setString(2, departmentTextField.getText());
-            preparedStatement.setString(3, salaryTextField.getText());
-            preparedStatement.setString(4, errorLevelTextField.getText());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AddPenaltiesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-    private void getQuery() {
-
-            query = "UPDATE `employee` SET "
-                    + "`E_Name`=?,"
-                    + "`Depart_Name`=?,"
-                    + "`E_Salary`=?,"
-                    + "`P_ID`= ? WHERE id = '"+emId+"'";
-
-
-    }
+    Connection con;
+    PreparedStatement pst;
     public void Connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/human", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/human", "root", "");
             System.out.println("Database Connected");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -94,10 +42,40 @@ public class AddPenaltiesController {
             ex.printStackTrace();
         }
     }
-    private void clearSelectedItem() {
+    @FXML
+    public void handleAddButton(ActionEvent actionEvent) {
+        String caseId = caseIdTextField.getText();
+        String depart = departTextField.getText();
+        String caseName = caseTextField.getText();
+        String idName = idTextField.getText();
 
-        errorLevelTextField.setText("");
+        try {
+            if (!Check.isString(depart) || !Check.isString(caseName)) {
+                warningMessageLabel.setText("กรุณาใส่ชื่อหรือคำอธิบายเป็นตัวอักษร");
+            } else {
+                if(!Check.isInteger(caseId)){
+                    warningMessageLabel.setText("กรุณาใส่ตัวเลข");
+                }else {
+                    Integer case2 = Integer.parseInt(caseId);
+                    pst = con.prepareStatement("insert into case1(Case_ID, Depart_Name, Case_Name, E_ID)value(?,?,?,?)");
+                    pst.setString(1, caseId);
+                    pst.setString(2, depart);
+                    pst.setString(3, caseName);
+                    pst.setString(4, idName);
+                    pst.executeUpdate();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Case");
+                    alert.setHeaderText("Added");
+                    alert.setContentText("");
+                    alert.showAndWait();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     public void handleBackToList(ActionEvent actionEvent) {
@@ -108,22 +86,6 @@ public class AddPenaltiesController {
             System.err.println("ให้ตรวจสอบการกำหนด route");
         }
     }
-    void setTextField(String E_ID, String E_Name, String Depart_Name, Double E_Salary, String P_ID) {
-
-        emId = E_ID;
-        nameTextField.setText(E_Name);
-        departmentTextField.setText(Depart_Name);
-        salaryTextField.setText(E_Salary.toString());
-        errorLevelTextField.setText(P_ID);
-
-    }
-
-    void setUpdate(boolean b) {
-        this.update = b;
-
-    }
-
-
 
 }
 

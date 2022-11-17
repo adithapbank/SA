@@ -8,9 +8,15 @@ public class Item {
     private Integer errorLevel; //ระดับความผิด
     private String description; //รายละเอียดบทลงโทษ
     private String imagePath; //ภาพพนักงาน
+    private String caseName;
+    private Integer caseId;
 
-
-
+    public Item(Integer caseId, String department, String caseName, String idName) {
+        this.caseId = caseId;
+        this.department = department;
+        this.caseName = caseName;
+        this.idName = idName;
+    }
 
     public Item(String idName) {
         this.idName = idName;
@@ -23,25 +29,24 @@ public class Item {
 
     }
 
-    public Item(String idName, String name, String department , Double salary, Integer errorLevel, String description, String path){
+    public Item(String idName, String name, String department , Double salary, Integer errorLevel, String description){
         this.idName = idName;
         this.name = name;
         this.department = department;
         this.salary = salary;
         this.errorLevel = errorLevel;
         this.description = description;
-        this.imagePath = path;
 
     }
 
-    public Item(String idName, String name, String department, Double salary, Integer errorLevel, String description){
+    public Item(String idName, String name, String department, Double salary, Integer errorLevel, String description, String caseName){
         this.idName = idName;
         this.name = name;
         this.department = department;
         this.salary = salary;
         this.errorLevel = errorLevel;
         this.description = description;
-
+        this.caseName = caseName;
 
     }
 
@@ -61,8 +66,21 @@ public class Item {
     public void setDescription(String description) {this.description = description;}
     public void setImagePath(String imagePath) {this.imagePath = imagePath;}
 
+    public String getCaseName() {
+        return caseName;
+    }
 
+    public void setCaseName(String caseName) {
+        this.caseName = caseName;
+    }
 
+    public Integer getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(Integer caseId) {
+        this.caseId = caseId;
+    }
 
     public String getIdName() {
         return idName;

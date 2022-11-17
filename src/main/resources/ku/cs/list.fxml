@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ListController">
    <children>
-      <AnchorPane prefHeight="161.0" prefWidth="1027.0" style="-fx-background-color: #47C6FC;">
+      <AnchorPane prefHeight="161.0" prefWidth="1027.0" style="-fx-background-color: #333bd4;">
          <children>
             <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="861.0" layoutY="41.0" text="userNameLabel" textFill="RED">
                <font>
@@ -37,18 +37,20 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <Button fx:id="goToPenalties" layoutX="514.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleGoToPenalties" prefHeight="30.0" prefWidth="111.0" text="เพิ่ม Case" />
          </children>
       </AnchorPane>
-      <TableView fx:id="itemTableView" layoutX="224.0" layoutY="193.0" onMouseClicked="#handleSelect" prefHeight="518.0" prefWidth="510.0">
+      <TableView fx:id="itemTableView" layoutY="162.0" onMouseClicked="#handleSelect" prefHeight="605.0" prefWidth="737.0">
          <columns>
-            <TableColumn fx:id="idCol" prefWidth="77.0" text="ID" />
-            <TableColumn fx:id="nameCol" prefWidth="92.0" text="Name" />
-            <TableColumn fx:id="departCol" prefWidth="90.0" text="Department" />
-            <TableColumn fx:id="saCol" prefWidth="93.0" text="Salary" />
-            <TableColumn fx:id="levelCol" prefWidth="64.0" text="Level" />
-            <TableColumn fx:id="penalCol" prefWidth="94.0" text="บทลงโทษ" />
+            <TableColumn fx:id="idCol" prefWidth="58.0" text="ID" />
+            <TableColumn fx:id="nameCol" prefWidth="122.0" text="Name" />
+            <TableColumn fx:id="departCol" prefWidth="114.0" text="Department" />
+            <TableColumn fx:id="saCol" prefWidth="118.0" text="Salary" />
+            <TableColumn fx:id="levelCol" minWidth="0.0" prefWidth="63.0" text="Level" />
+            <TableColumn fx:id="penalCol" prefWidth="139.0" text="บทลงโทษ" />
+            <TableColumn fx:id="caseCol" prefWidth="122.0" text="เคส" />
          </columns></TableView>
-      <Button layoutX="746.0" layoutY="193.0" mnemonicParsing="false" onAction="#showItemData" prefHeight="37.0" prefWidth="83.0" text="Refresh" textFill="#61cf02">
+      <Button layoutX="757.0" layoutY="194.0" mnemonicParsing="false" onAction="#showItemData" prefHeight="37.0" prefWidth="83.0" text="Refresh" textFill="#61cf02">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
@@ -85,6 +87,19 @@
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </TextField>
-      <Label fx:id="warningMessageLabel5" layoutX="851.0" layoutY="579.0" prefHeight="17.0" prefWidth="83.0" textFill="RED" />
+      <Label fx:id="warningMessageLabel5" layoutX="892.0" layoutY="488.0" prefHeight="17.0" prefWidth="83.0" textFill="RED" />
+      <Button fx:id="deleteBtn" layoutX="829.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteBtn" prefHeight="30.0" prefWidth="125.0" text="DELETE" textFill="RED">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button layoutX="901.0" layoutY="168.0" mnemonicParsing="false" onAction="#showCaseData" prefHeight="37.0" prefWidth="83.0" text="CASE" textFill="#5c9c44">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteCase" layoutX="901.0" layoutY="219.0" mnemonicParsing="false" onAction="#deleteCase" text="ลบ Case" textFill="#5c9c44">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
    </children>
 </AnchorPane>

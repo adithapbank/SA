@@ -12,6 +12,10 @@ import ku.cs.services.DataSource;
 import ku.cs.services.UserListFileDataSource;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class LoginController {
@@ -19,7 +23,8 @@ public class LoginController {
     @FXML private TextField usernameTextField;
     @FXML private PasswordField passwordField;
     @FXML private Label warningMessageLabel;
-
+    Connection con;
+    PreparedStatement pst;
     @FXML
     public void initialize()
     {
@@ -52,7 +57,18 @@ public class LoginController {
         }
     }
 
-
+    public void Connect() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/human", "root", "");
+            System.out.println("Database Connected");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
     public void handleRegisterButton(ActionEvent event){
         try {
             FXRouter.goTo("register");
