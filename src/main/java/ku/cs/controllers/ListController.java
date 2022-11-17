@@ -47,6 +47,7 @@ public class ListController {
     @FXML private Button addLevelBtn;
     @FXML private Button deleteCase;
     @FXML private Button deleteBtn;
+    @FXML private Button caseData;
     @FXML private Label warningMessageLabel5;
     @FXML private TableColumn<Item, String> idCol;
     @FXML private TableColumn<Item, String> nameCol;
@@ -82,6 +83,14 @@ public class ListController {
             depText.setDisable(true);
             nameText.setDisable(true);
             levelText.setDisable(true);
+            goToPenalties.setDisable(true);
+            goToPenalties.setVisible(false);
+            deleteBtn.setDisable(true);
+            deleteBtn.setVisible(false);
+            deleteCase.setDisable(true);
+            deleteCase.setVisible(false);
+            caseData.setDisable(true);
+            caseData.setVisible(false);
             }
         loadData();
         showItemData();
