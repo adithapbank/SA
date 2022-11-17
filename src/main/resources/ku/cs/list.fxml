@@ -8,7 +8,7 @@
    <children>
       <AnchorPane prefHeight="161.0" prefWidth="1027.0" style="-fx-background-color: #333bd4;">
          <children>
-            <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="861.0" layoutY="41.0" text="userNameLabel" textFill="RED">
+            <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="861.0" layoutY="41.0" text="userNameLabel" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -22,9 +22,9 @@
                   <Font name="System Bold" size="46.0" />
                </font>
             </Text>
-            <Label fx:id="nameSurNameLabel" layoutX="861.0" layoutY="71.0" text="nameSurNameLabel" textFill="RED">
+            <Label fx:id="nameSurNameLabel" layoutX="861.0" layoutY="71.0" text="nameSurNameLabel" textFill="WHITE">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Button fx:id="adminButton" layoutX="641.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleGoToAddName" prefHeight="30.0" prefWidth="111.0" text="เพิ่มรายชื่อ">

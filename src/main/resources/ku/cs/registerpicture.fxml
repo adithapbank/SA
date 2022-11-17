@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="350.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.RegisterPictureController">
    <children>
-      <AnchorPane prefHeight="71.0" prefWidth="450.0" style="-fx-background-color: #47C6FC;" />
+      <AnchorPane prefHeight="71.0" prefWidth="450.0" style="-fx-background-color: #333bd4;" />
       <ImageView fx:id="userImageView" fitHeight="170.0" fitWidth="234.0" layoutX="108.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="browseButton" layoutX="186.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleUploadButton" text="เลือกรูปภาพ">
          <font>

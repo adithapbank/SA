@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.RegisterController">
    <children>
-      <AnchorPane layoutX="-2.0" prefHeight="118.0" prefWidth="803.0" style="-fx-background-color: #47C6FC;">
+      <AnchorPane layoutX="-2.0" prefHeight="118.0" prefWidth="803.0" style="-fx-background-color: #333bd4;">
          <children>
             <Text fill="WHITE" layoutX="325.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ลงทะเบียน" wrappingWidth="152.798828125">
                <font>

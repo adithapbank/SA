@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AdminSettingController">
     <children>
-      <AnchorPane layoutY="-4.0" prefHeight="89.0" prefWidth="800.0" style="-fx-background-color: #47C6FC;">
+      <AnchorPane layoutY="-4.0" prefHeight="89.0" prefWidth="800.0" style="-fx-background-color: #333bd4;">
          <children>
               <Label layoutX="250.0" layoutY="36.0" prefHeight="39.0" prefWidth="299.0" text="การตั้งค่าบัญชีผู้ดูแลระบบ" textFill="WHITE">
                   <font>
