@@ -4,8 +4,8 @@ public class Item {
     private String idName; //รหัสพนักงาน
     private String name; //ชื่อพนักงาน
     private String department; // แผนก
-    private int salary; //เงินเดือน
-    private String errorLevel; //ระดับความผิด
+    private Double salary; //เงินเดือน
+    private Integer errorLevel; //ระดับความผิด
     private String description; //รายละเอียดบทลงโทษ
     private String imagePath; //ภาพพนักงาน
 
@@ -16,14 +16,14 @@ public class Item {
         this.idName = idName;
         this.name = "null";
         this.department = "null";
-        this.salary = 0;
-        this.errorLevel = "null";
+        this.salary = 0.0;
+        this.errorLevel = 0;
         this.description = "null";
         this.imagePath = "null";
 
     }
 
-    public Item(String idName, String name, String department , int salary, String errorLevel, String description, String path){
+    public Item(String idName, String name, String department , Double salary, Integer errorLevel, String description, String path){
         this.idName = idName;
         this.name = name;
         this.department = department;
@@ -34,7 +34,7 @@ public class Item {
 
     }
 
-    public Item(String idName, String name, String department, int salary, String errorLevel, String description){
+    public Item(String idName, String name, String department, Double salary, Integer errorLevel, String description){
         this.idName = idName;
         this.name = name;
         this.department = department;
@@ -52,10 +52,10 @@ public class Item {
     public void setDepartment(String department) {
         this.department = department;
     }
-    public void setSalary(int salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
-    public void setErrorLevel(String errorLevel) {
+    public void setErrorLevel(Integer errorLevel) {
         this.errorLevel = errorLevel;
     }
     public void setDescription(String description) {this.description = description;}
@@ -73,10 +73,10 @@ public class Item {
     public String getDepartment() {
         return department;
     }
-    public int getSalary() {
+    public Double getSalary() {
         return salary;
     }
-    public String getErrorLevel() {
+    public Integer getErrorLevel() {
         return errorLevel;
     }
     public String getDescription() {return description;}

@@ -11,13 +11,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ku.cs.models.*;
 import ku.cs.router.FXRouter;
+import ku.cs.services.Check;
 import ku.cs.services.DataSource;
-import ku.cs.services.ItemListFileDataSource;
+//import ku.cs.services.ItemListFileDataSource;
 import ku.cs.services.StringConfiguration;
 
 import java.io.IOException;
@@ -34,7 +36,12 @@ public class ListController {
     @FXML private Label userNameLabel;
     @FXML private ImageView userImageView;
     @FXML private Label nameSurNameLabel;
-    @FXML private Button fixGoToAddPenalties;
+    @FXML private TextField levelText;
+    @FXML private TextField idText;
+    @FXML private TextField nameText;
+    @FXML private TextField depText;
+    @FXML private TextField salaText;
+    @FXML private Button addLevelBtn;
     @FXML private TableColumn<Item, String> idCol;
     @FXML private TableColumn<Item, String> nameCol;
     @FXML private TableColumn<Item, String> levelCol;
@@ -54,13 +61,20 @@ public class ListController {
     {
         System.out.println("Enter List");
         user = (User) FXRouter.getData();
-        userImageView.setImage(new Image("file:"+user.getImagePath() ,true));
         userNameLabel.setText(user.getUsername());
         nameSurNameLabel.setText(user.getName()+ " " +user.getSurname());
 
         if(user.getType().equals("user")){
             adminButton.setDisable(true);
-            fixGoToAddPenalties.setDisable(true);}
+            adminButton.setVisible(false);
+            addLevelBtn.setVisible(false);
+            addLevelBtn.setDisable(true);
+            salaText.setDisable(true);
+            idText.setDisable(true);
+            depText.setDisable(true);
+            nameText.setDisable(true);
+            levelText.setDisable(true);
+            }
         loadData();
         showItemData();
     }
@@ -78,8 +92,8 @@ public class ListController {
                         resultSet.getString("E_ID"),
                         resultSet.getString("E_Name"),
                         resultSet.getString("Depart_Name"),
-                        resultSet.getInt("E_Salary"),
-                        resultSet.getString("P_ID"),
+                        resultSet.getDouble("E_Salary"),
+                        resultSet.getInt("P_ID"),
                         resultSet.getString("P_Name")));
 
                 itemTableView.setItems(ItemList);
@@ -114,22 +128,7 @@ public class ListController {
         }
     }
 
-    @FXML
-    public void handleGoToAddPenalties(ActionEvent actionEvent){
 
-        try {
-            selectedItem = itemTableView.getSelectionModel().getSelectedItem();
-            Parent parent = FXMLLoader.load(getClass().getResource("/ku/cs/addpenalties.fxml"));
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.show();
-
-        }  catch (IOException ex) {
-            System.err.println("ไปหน้า addpenalties ไม่ได้");
-        }
-    }
 
 
     @FXML
@@ -181,6 +180,38 @@ public class ListController {
         }  catch (IOException ex) {
             System.err.println("ไปหน้า addname ไม่ได้");
         }
+    }
+
+    @FXML
+    public void handleSelect(MouseEvent mouseEvent) {
+        Item item = itemTableView.getSelectionModel().getSelectedItem();
+        idText.setText(""+item.getIdName());
+        nameText.setText(""+item.getName());
+        depText.setText(""+item.getDepartment());
+        salaText.setText(""+item.getSalary());
+        levelText.setText(""+item.getErrorLevel());
+    }
+    @FXML
+    public void addLevelBtn(ActionEvent actionEvent) {
+        String id = idText.getText();
+        String name = nameText.getText();
+        String dep = depText.getText();
+        String sala = salaText.getText();
+        Integer lev = Integer.parseInt(levelText.getText());
+        try{
+            preparedStatement = connection.prepareStatement("UPDATE employee SET E_Name = ?, Depart_Name = ?, E_Salary = ? ,P_ID = ? where E_ID = ?");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2,dep);
+            preparedStatement.setString(3,sala);
+            preparedStatement.setInt(4,lev);
+            preparedStatement.setString(5,id);
+            preparedStatement.executeUpdate();
+            showItemData();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

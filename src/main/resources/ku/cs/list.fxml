@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ListController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ListController">
    <children>
       <AnchorPane prefHeight="161.0" prefWidth="1027.0" style="-fx-background-color: #47C6FC;">
          <children>
-            <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="862.0" layoutY="72.0" text="userNameLabel">
+            <Label fx:id="userNameLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="861.0" layoutY="41.0" text="userNameLabel" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="902.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleBackToLoginButton" prefHeight="25.0" prefWidth="98.0" text="ออกจากระบบ">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
             <Button layoutX="773.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleSettingButton" prefHeight="30.0" prefWidth="111.0" text="รายละเอียดบัญชี">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <ImageView fx:id="userImageView" fitHeight="107.0" fitWidth="125.0" layoutX="689.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-            <Text fill="#fffbfb" layoutX="86.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รายชื่อผู้กระทำผิด">
+            <Text fill="#fffbfb" layoutX="318.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รายชื่อผู้กระทำผิด" wrappingWidth="390.421875">
                <font>
                   <Font name="System Bold" size="46.0" />
                </font>
             </Text>
-            <Label fx:id="nameSurNameLabel" layoutX="846.0" layoutY="41.0" text="nameSurNameLabel">
+            <Label fx:id="nameSurNameLabel" layoutX="861.0" layoutY="71.0" text="nameSurNameLabel" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
@@ -42,14 +32,14 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="fixGoToAddPenalties" layoutX="500.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleGoToAddPenalties" prefHeight="30.0" prefWidth="111.0" text="เพิ่มบทลงโทษ">
+            <Button layoutX="909.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleBackToLoginButton" prefHeight="25.0" prefWidth="98.0" text="ออกจากระบบ">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <TableView fx:id="itemTableView" layoutX="224.0" layoutY="193.0" prefHeight="518.0" prefWidth="510.0">
+      <TableView fx:id="itemTableView" layoutX="224.0" layoutY="193.0" onMouseClicked="#handleSelect" prefHeight="518.0" prefWidth="510.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="77.0" text="ID" />
             <TableColumn fx:id="nameCol" prefWidth="92.0" text="Name" />
@@ -58,7 +48,42 @@
             <TableColumn fx:id="levelCol" prefWidth="64.0" text="Level" />
             <TableColumn fx:id="penalCol" prefWidth="94.0" text="บทลงโทษ" />
          </columns></TableView>
-      <Button layoutX="754.0" layoutY="434.0" mnemonicParsing="false" onAction="#showItemData" prefHeight="37.0" prefWidth="83.0" text="Refresh">
-      </Button>
+      <Button layoutX="746.0" layoutY="193.0" mnemonicParsing="false" onAction="#showItemData" prefHeight="37.0" prefWidth="83.0" text="Refresh" textFill="#61cf02">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
+      <TextField fx:id="levelText" layoutX="798.0" layoutY="481.0" prefHeight="30.0" prefWidth="187.0">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <Button fx:id="addLevelBtn" layoutX="829.0" layoutY="530.0" mnemonicParsing="false" onAction="#addLevelBtn" prefHeight="30.0" prefWidth="125.0" text="UPDATE" textFill="#eb0000">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Label layoutX="746.0" layoutY="275.0" text="ID" />
+      <Label layoutX="746.0" layoutY="325.0" text="Name" />
+      <Label layoutX="746.0" layoutY="376.0" text="แผนก" />
+      <Label layoutX="746.0" layoutY="429.0" text="เงินเดือน" />
+      <Label layoutX="746.0" layoutY="487.0" text="ระดับโทษ" />
+      <TextField fx:id="salaText" editable="false" layoutX="798.0" layoutY="425.0" prefHeight="30.0" prefWidth="187.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="depText" editable="false" layoutX="798.0" layoutY="372.0" prefHeight="30.0" prefWidth="187.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="nameText" editable="false" layoutX="798.0" layoutY="321.0" prefHeight="30.0" prefWidth="187.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="idText" editable="false" layoutX="798.0" layoutY="268.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

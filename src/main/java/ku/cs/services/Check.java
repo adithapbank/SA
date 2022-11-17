@@ -23,4 +23,11 @@ public class Check {
             return true;
         }
     }
+    public static boolean isInt(Integer s) {
+        try {
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 }
